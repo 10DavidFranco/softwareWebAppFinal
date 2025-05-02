@@ -36,7 +36,6 @@ def handlelogin(request):
     print(username)
     print(password)
     print(type(password))
-    context['login'] = login
     sql = "SELECT * FROM tasktrek_employee"
     cursor.execute(sql)
     employees = cursor.fetchall()
@@ -50,6 +49,7 @@ def handlelogin(request):
             if employee[4] == int(password):
                 correctlogin = True
                 print("Password matches!!!")
+                context['employee'] = employee
                 if employee[2] == 1:
                     adminflag = True
 
@@ -70,9 +70,9 @@ def handlelogin(request):
     print(type(employee[2]))
     #Check admin
     if adminflag:
-        return render(request, "superuser.html")
+        return render(request, "superuser.html", context)
     else:
-        return render(request, "user.html")
+        return render(request, "user.html", context)
     #Render appropriate view
     #return render(request, "test.html")
     
