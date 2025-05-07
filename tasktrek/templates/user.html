@@ -3,50 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager</title>
+    <title>User Dashboard</title>
+
+    <!-- Load static and reference the CSS -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <!-- Blue Header -->
-    <div class="header">
-        Task Manager Dashboard
+    <!-- Top Heading Bar -->
+    <div class="header-bar">
+        <h1>Task Trek</h1> <!-- Application Title -->
+        <div class="user-info">
+            <span class="user-name">Jordan</span> <!-- Sample name -->
+            <div class="profile-picture"></div>
+        </div>
     </div>
 
-    <!-- Task Columns -->
-    <div class="task-container">
-        <!-- High Priority Column -->
-        <div class="task-column">
-            <div class="column-title">High Priority</div>
+    <!-- Tasks Section -->
+    <div class="tasks-container">
+        <!-- Team Tasks Section -->
+        <div class="team-tasks">
+            <!-- Decorative Background Label -->
+            <div class="background-label">Team Tasks</div>
+            <!-- Example Tasks -->
             <div class="task-card">
-                <div class="task-title">Finish Project Report</div>
-                <div class="task-details">Deadline: May 10, 2025</div>
-                <span class="task-status in-progress">In Progress</span>
+                <h3>Develop Team Sprint Goals</h3>
+                <p>Collaboratively define goals for the next sprint focusing on core deliverables.</p>
             </div>
             <div class="task-card">
-                <div class="task-title">Prepare Presentation</div>
-                <div class="task-details">Deadline: May 8, 2025</div>
-                <span class="task-status overdue">Overdue</span>
-            </div>
-        </div>
-
-        <!-- Medium Priority Column -->
-        <div class="task-column">
-            <div class="column-title">Medium Priority</div>
-            <div class="task-card">
-                <div class="task-title">Plan Team Meeting</div>
-                <div class="task-details">Deadline: May 15, 2025</div>
-                <span class="task-status in-progress">In Progress</span>
+                <h3>Brainstorm Project Ideas</h3>
+                <p>Generate ideas for the next phase of the project. List insights in shared documents.</p>
             </div>
         </div>
 
-        <!-- Low Priority Column -->
-        <div class="task-column">
-            <div class="column-title">Low Priority</div>
+        <!-- Individual Tasks Section -->
+        <div class="individual-tasks">
+            <!-- Decorative Background Label -->
+            <div class="background-label">Individual Tasks</div>
+            <!-- Example Tasks -->
             <div class="task-card">
-                <div class="task-title">Organize Desk</div>
-                <div class="task-details">Deadline: May 20, 2025</div>
-                <span class="task-status completed">Completed</span>
+                <h3>Fix Bug #456</h3>
+                <p>Track down and resolve the issue in the dashboard login feature before the deadline.</p>
+            </div>
+            <div class="task-card">
+                <h3>Write Unit Tests</h3>
+                <p>Create extensive unit tests for the new API endpoints to improve code reliability.</p>
             </div>
         </div>
     </div>

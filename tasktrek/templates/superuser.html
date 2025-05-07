@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Superuser page</title>
-    </head>
-    <body>
-        <h1>Event for {{employee}}</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    
+    <!-- Load static files and reference the CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Top Heading Bar -->
+    <div class="header-bar">
+        <h1>Task Trek - Admin Dashboard</h1>
+        <div class="user-info">
+            <span class="user-name">Admin</span>
+            <div class="profile-picture"></div>
+        </div>
+    </div>
 
-    </body>
+    <!-- Admin Content -->
+    <div class="admin-container">
+        <!-- Task and User Management Section -->
+        <div class="management-section">
+            <h2>Team Members and Task Management</h2>
+            
+
+            <div class="user-management">
+                <!-- Example User -->
+                <div class="user-card">
+                    <div class="card-header">
+                        <h3>Jordan</h3>
+                        <button class="add-task-btn" title="Add Task">+</button>
+                    </div>
+                    <p>Email: jordan@example.com</p>
+                    <h4>Team Tasks</h4>
+                    <ul class="task-list">
+                        <li>
+                            Develop Team Sprint Goals 
+                            <div class="action-buttons"> 
+                                <button class="approve-btn">Approve</button> 
+                                <button class="deny-btn">Deny</button>
+                            </div>
+                        </li>
+                        <li>
+                            Coordinate Team Meeting 
+                            <div class="action-buttons">
+                                <button class="approve-btn">Approve</button>
+                                <button class="deny-btn">Deny</button>
+                            </div>
+                        </li>
+                    </ul>
+                    <h4>Individual Tasks</h4>
+                    <ul class="task-list">
+                        <li>
+                            Write Unit Tests 
+                            <div class="action-buttons">
+                                <button class="approve-btn">Approve</button>
+                                <button class="deny-btn">Deny</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
