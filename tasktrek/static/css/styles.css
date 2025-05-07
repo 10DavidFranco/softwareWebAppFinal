@@ -1,0 +1,314 @@
+/* Reset Default Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #8ecae6; /* Light blue background */
+    color: white;
+    padding: 0;
+}
+
+/* Header Bar */
+.header-bar {
+    background-color: #023047;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+/* Title Style */
+.header-bar h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffb703;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info .profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #219ebc;
+    margin-left: 0.8rem;
+}
+
+.user-info .user-name {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffb703;
+}
+
+/* Tasks Container */
+.tasks-container {
+    display: flex;
+    padding: 2rem;
+    gap: 1.5rem;
+}
+
+/* Team Tasks Section */
+.team-tasks {
+    flex: 1;
+    background-color: #fb8500;
+    border-radius: 10px;
+    padding: 1.5rem;
+    position: relative;
+}
+
+.individual-tasks {
+    flex: 2;
+    background-color: #ffb703;
+    border-radius: 10px;
+    padding: 1.5rem;
+    position: relative;
+}
+
+/* Label Background Style */
+.background-label {
+    position: absolute;
+    top: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+}
+
+/* Task Card Styles */
+.task-card {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: white; 
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
+    color: #023047; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Effects */
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); 
+}
+
+/* Task Title */
+.task-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.7rem;
+    padding-left: 0.5rem; 
+    border-left: 3px solid #fb8500;
+    color: #fb8500;
+}
+
+/* Task Instructions */
+.task-card p {
+    font-size: 1rem; 
+    padding-left: 0.5rem; /* Match left padding with title */
+    margin-top: 0; /* Remove additional top margin */
+    color: #023047; 
+    line-height: 1.5; /* Ensure consistent vertical text spacing */
+    text-align: start; /* Force left alignment */
+}
+/* Tasks Container */
+.tasks-container {
+    display: flex;
+    gap: 1.5rem;
+    height: 70vh; /* Restrict visible height to allow scrolling */
+    overflow-y: auto; /* Enable vertical scrolling within this container */
+    padding-right: 0.5rem; /* Add padding for scrollbar aesthetics */
+}
+
+/* Optional: Make scrollbars prettier */
+.tasks-container::-webkit-scrollbar {
+    width: 10px; /* Width of scrollbar */
+}
+
+.tasks-container::-webkit-scrollbar-thumb {
+    background-color: #fb8500; /* Color of scrollbar thumb */
+    border-radius: 10px; /* Rounded corners */
+    border: 1px solid #ffb703; /* Optional: border for thumb */
+}
+
+.tasks-container::-webkit-scrollbar-track {
+    background-color: #8ecae6; /* Background color of scrollbar track */
+}
+
+.task-info {
+    display: flex; /* Align title and checkbox horizontally */
+    align-items: center; /* Vertically center-aligned */
+    justify-content: space-between; /* Place title and checkbox apart */
+    margin-bottom: 0.5rem;
+}
+
+.task-checkbox {
+    width: 16px; /* Size of checkbox */
+    height: 16px;
+    cursor: pointer; /* Hover indication for clicking */
+    accent-color: #fb8500; /* Optional: Change checkbox appearance to match design */
+}
+
+/* Optional styling for completed tasks */
+.task-card h3 {
+    text-decoration: none; /* Default (not crossed out) */
+}
+
+.task-card.completed h3 {
+    text-decoration: line-through; /* Add strikethrough when completed */
+    color: #9E9E9E; /* Gray out completed task title */
+}
+
+/* Admin Container */
+.admin-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Section Headers */
+.management-section h2 {
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+/* User Management */
+.user-management {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* User Card */
+.user-card {
+    background-color: #1d3557;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #fb8500;
+}
+
+.add-task-btn {
+    background-color: #fb8500;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.add-task-btn:hover {
+    background-color: #e63946;
+}
+
+.user-card p {
+    font-size: 1rem;
+    margin: 0.5rem 0 1rem 0;
+}
+
+/* Task List */
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-list li {
+    background-color: #f1faee;
+    color: #1d3557;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.approve-btn {
+    background-color: #8ecae6;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.deny-btn {
+    background-color: #fb8500;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.approve-btn:hover {
+    background-color: #219ebc;
+}
+
+.deny-btn:hover {
+    background-color: #e63946;
+}
+/* Section Header: Flexbox alignment between title and button */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Add Team Task Button */
+.add-team-task-btn {
+    background-color: #fb8500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.7rem 1.3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.add-team-task-btn:hover {
+    background-color: #e63946;
+}
