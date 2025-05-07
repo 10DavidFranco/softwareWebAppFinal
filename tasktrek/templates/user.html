@@ -1,9 +1,54 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>User page</title>
-    </head>
-    <body>
-        <h1>User stuff goes here</h1>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <!-- Blue Header -->
+    <div class="header">
+        Task Manager Dashboard
+    </div>
+
+    <!-- Task Columns -->
+    <div class="task-container">
+        <!-- High Priority Column -->
+        <div class="task-column">
+            <div class="column-title">High Priority</div>
+            <div class="task-card">
+                <div class="task-title">Finish Project Report</div>
+                <div class="task-details">Deadline: May 10, 2025</div>
+                <span class="task-status in-progress">In Progress</span>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Prepare Presentation</div>
+                <div class="task-details">Deadline: May 8, 2025</div>
+                <span class="task-status overdue">Overdue</span>
+            </div>
+        </div>
+
+        <!-- Medium Priority Column -->
+        <div class="task-column">
+            <div class="column-title">Medium Priority</div>
+            <div class="task-card">
+                <div class="task-title">Plan Team Meeting</div>
+                <div class="task-details">Deadline: May 15, 2025</div>
+                <span class="task-status in-progress">In Progress</span>
+            </div>
+        </div>
+
+        <!-- Low Priority Column -->
+        <div class="task-column">
+            <div class="column-title">Low Priority</div>
+            <div class="task-card">
+                <div class="task-title">Organize Desk</div>
+                <div class="task-details">Deadline: May 20, 2025</div>
+                <span class="task-status completed">Completed</span>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
