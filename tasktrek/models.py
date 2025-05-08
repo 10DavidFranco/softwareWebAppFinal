@@ -12,7 +12,13 @@ class Employee(models.Model):
 
 class Task(models.Model):
     id = models.AutoField(primary_key = True)
+    name = models.CharField(max_length = 32, default="...")
     description = models.CharField(max_length = 100)
     due_date = models.DateField()
-    status = models.BooleanField()
+    is_complete = models.BooleanField(default = False)
+    is_team = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f"{self.id}~{self.name}~{self.description}~{self.due_date}~{self.is_complete}~{self.is_team}"
 

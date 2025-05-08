@@ -14,7 +14,7 @@
     <div class="header-bar">
         <h1>Task Trek</h1> <!-- Application Title -->
         <div class="user-info">
-            <span class="user-name">Jordan</span> <!-- Sample name -->
+            <span class="user-name">{{name}}</span> <!-- Sample name -->
             <div class="profile-picture"></div>
         </div>
     </div>
@@ -26,14 +26,14 @@
             <!-- Decorative Background Label -->
             <div class="background-label">Team Tasks</div>
             <!-- Example Tasks -->
-            <div class="task-card">
-                <h3>Develop Team Sprint Goals</h3>
-                <p>Collaboratively define goals for the next sprint focusing on core deliverables.</p>
-            </div>
-            <div class="task-card">
-                <h3>Brainstorm Project Ideas</h3>
-                <p>Generate ideas for the next phase of the project. List insights in shared documents.</p>
-            </div>
+            {% for task in tasks %}
+                {% if task.is_team == 1 %}
+                <div class="task-card">
+                    <h3>{{task.name}}</h3>
+                    <p>{{task.description}}</p>
+                </div>
+                {% endif %}
+            {% endfor %}
         </div>
 
         <!-- Individual Tasks Section -->
@@ -41,14 +41,15 @@
             <!-- Decorative Background Label -->
             <div class="background-label">Individual Tasks</div>
             <!-- Example Tasks -->
-            <div class="task-card">
-                <h3>Fix Bug #456</h3>
-                <p>Track down and resolve the issue in the dashboard login feature before the deadline.</p>
-            </div>
-            <div class="task-card">
-                <h3>Write Unit Tests</h3>
-                <p>Create extensive unit tests for the new API endpoints to improve code reliability.</p>
-            </div>
+
+            {% for task in tasks %}
+                {% if task.is_team == 0 %}
+                <div class="task-card">
+                    <h3>{{task.name}}</h3>
+                    <p>{{task.description}}</p>
+                </div>
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 </body>

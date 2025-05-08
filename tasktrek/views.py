@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Employee, Task
 import sqlite3
 
@@ -13,9 +13,60 @@ def login(request):
 
 #The user route perhaps needs to take in an employee object of that specific user
 #Need to find a way to pass in the employee information from the login screen.
-def user(request):
-    tasks = Task.objects.all()
-    return render(request, "user.html", {'tasks': tasks})
+def user(request, employee_id):
+    dataConnector = sqlite3.connect('db.sqlite3')
+    cursor = dataConnector.cursor()
+    print("Look at my employee id")
+    print(employee_id)
+    #Now look them up and get their info
+    cursor.execute("SELECT * FROM tasktrek_employee WHERE id = ?", [employee_id])
+    employee_data = cursor.fetchone()
+    print("Look at my employee data")
+    print(employee_data)
+
+    employee_tasks = employee_data[3]
+    print("Look at my employees tasks...")
+    print(employee_tasks)
+    print(type(employee_tasks))
+
+    clean_employee_tasks = employee_tasks.split(",")
+    print("Look at my REAL employee tasks...")
+    print(clean_employee_tasks)
+
+    task_list = Task.objects.all()
+    clean_task_list = []
+
+    
+
+    for task in task_list:
+        copy_task = str(task)
+        clean_task_list.append(copy_task.split("~"))
+
+    print("Cleaned up task list")
+    print(clean_task_list)
+
+
+    #IF task id matches, store it in task array to be passed into template
+    #For every task id a user has, get the appropriate task
+    task_array = []
+    for a_task_id in clean_employee_tasks:
+        for a_task in clean_task_list:
+            if a_task_id == a_task[0]:
+                task_array.append(Task.objects.get(id=a_task_id))
+
+    print("All tasks compiled!!!")
+    print(type(task_array[0]))
+    #We still need to handle edge cases...but its a start
+
+
+
+    #Need to find employee tasks from task_list and send them to template in variable calld tasks
+
+    context = {
+        'tasks' : task_array,
+        'name' : employee_data[1]
+    }
+    return render(request, "user.html", context)
 
 def superuser(request):
     employees = Employee.objects.all()
@@ -29,7 +80,7 @@ def handlelogin(request):
     adminflag = False
     dataConnector = sqlite3.connect('db.sqlite3')
     cursor = dataConnector.cursor()
-    context = {}
+    #context = {}
     username = request.POST.get('login1', None)
     password = request.POST.get('login2', None)
     print("GETTING LOGIN INFORMATION")
@@ -39,6 +90,7 @@ def handlelogin(request):
     sql = "SELECT * FROM tasktrek_employee"
     cursor.execute(sql)
     employees = cursor.fetchall()
+    employee_id = None
     #print(employees)
 
     for employee in employees:
@@ -48,8 +100,9 @@ def handlelogin(request):
             print(employee)
             if employee[4] == int(password):
                 correctlogin = True
+                employee_id = employee[0]
                 print("Password matches!!!")
-                context['employee'] = employee
+                #my_employee = employee
                 if employee[2] == 1:
                     adminflag = True
 
@@ -70,9 +123,10 @@ def handlelogin(request):
     print(type(employee[2]))
     #Check admin
     if adminflag:
-        return render(request, "superuser.html", context)
+        return redirect("superuser", employee_id = employee_id)
     else:
-        return render(request, "user.html", context)
+        #Need to pass in name and tasks
+        return redirect("user", employee_id= employee_id)
     #Render appropriate view
     #return render(request, "test.html")
     
