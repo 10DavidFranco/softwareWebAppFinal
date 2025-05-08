@@ -28,40 +28,51 @@
 
             <div class="user-management">
                 <!-- Example User -->
-                <div class="user-card">
-                    <div class="card-header">
-                        <h3>Jordan</h3>
-                        <button class="add-task-btn" title="Add Task">+</button>
+
+
+
+
+
+                {% for employee in employees %}
+                    <div class="user-card">
+                        <div class="card-header">
+                            <h3>{{employee.name}}</h3>
+                            <button class="add-task-btn" title="Add Task">+</button>
+                        </div>
+                        <p>Email: jordan@example.com</p>
+                        <h4>Team Tasks</h4>
+                        <ul class="task-list">
+                            {% for task in group_tasks %}
+                            <li>
+                                {{ task }} 
+                                <div class="action-buttons"> 
+                                    <button class="approve-btn">Approve</button> 
+                                    <button class="deny-btn">Deny</button>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <h4>Individual Tasks</h4>
+                        <ul class="task-list">
+                            
+                                {% for task in employee.tasks %}
+                                
+                                <li>
+                                {{task}} 
+                                <div class="action-buttons">
+                                    <button class="approve-btn">Approve</button>
+                                    <button class="deny-btn">Deny</button>
+                                </div>
+                                </li>
+                                {% endfor %}
+                            
+                        </ul>
                     </div>
-                    <p>Email: jordan@example.com</p>
-                    <h4>Team Tasks</h4>
-                    <ul class="task-list">
-                        <li>
-                            Develop Team Sprint Goals 
-                            <div class="action-buttons"> 
-                                <button class="approve-btn">Approve</button> 
-                                <button class="deny-btn">Deny</button>
-                            </div>
-                        </li>
-                        <li>
-                            Coordinate Team Meeting 
-                            <div class="action-buttons">
-                                <button class="approve-btn">Approve</button>
-                                <button class="deny-btn">Deny</button>
-                            </div>
-                        </li>
-                    </ul>
-                    <h4>Individual Tasks</h4>
-                    <ul class="task-list">
-                        <li>
-                            Write Unit Tests 
-                            <div class="action-buttons">
-                                <button class="approve-btn">Approve</button>
-                                <button class="deny-btn">Deny</button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                {% endfor %}
+
+
+
+
             </div>
         </div>
     </div>

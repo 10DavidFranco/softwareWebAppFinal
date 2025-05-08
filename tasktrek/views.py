@@ -68,10 +68,78 @@ def user(request, employee_id):
     }
     return render(request, "user.html", context)
 
-def superuser(request):
+def superuser(request, employee_id):
+    dataConnector = sqlite3.connect('db.sqlite3')
+    cursor = dataConnector.cursor()
+    print("Woah look at Mr big shot over here")
+    print(employee_id)
     employees = Employee.objects.all()
     tasks = Task.objects.all()
-    return render(request, "superuser.html", {'employees': employees, 'tasks': tasks})
+
+
+
+    print("Look at my employees...")
+    print(employees)
+
+    clean_employee_list = []
+    for employee in employees:
+        clean_copy = str(employee)
+        clean_employee_list.append(clean_copy.split("~"))
+    print(clean_employee_list)
+    #Need to clean the task list for searching
+
+    for employee in clean_employee_list:
+        clean_task_list = employee[3].split(",")
+        task_words = []
+        for task_id in clean_task_list:
+            #IF WE ASSIGN GROUP TASKS WE NEED TO KEEP THIS CHECK IN MIND....I AM CHECKING FOR TEXT NOT BOOL , MAYBVE DELETE DUMMY TASKS
+            cursor.execute("SELECT name FROM tasktrek_task WHERE id = ? AND is_team = ?", [task_id, "False"])
+            task_words.append(cursor.fetchone()[0])
+            print(task_id)
+        print("Look at my task words")
+        print(task_words)
+        employee[3] = task_words
+            
+    print("Finally my list is made!!!")
+    print(clean_employee_list)
+
+    new_employee_list = []
+    for employee in clean_employee_list:
+        new_employee = {
+            'id': employee[0],
+            'name': employee[1],
+            'is_admin': employee[2],
+            'tasks': employee[3],
+            'username': employee[4],
+            'password': employee[5]
+        }
+
+        new_employee_list.append(new_employee)
+
+    print("NOWWWW it's done...")
+    print(new_employee_list)
+    
+    cursor.execute("SELECT name FROM tasktrek_task WHERE is_team = ?", ["True"])
+    group_tasks = cursor.fetchall()
+    print("Look at my group tasks")
+    #print(len(group_tasks))
+    print(type(group_tasks))
+
+
+    clean_group_tasks = []
+    for group_task in group_tasks:
+        print(type(group_task))
+        group_task_copy = str(group_task)
+        print(group_task_copy)
+        good_copy = group_task_copy[2:len(group_task_copy)-3]
+        print(good_copy)
+        clean_group_tasks.append(good_copy)
+    print(clean_group_tasks)
+
+    #Need to go into the task_list of each employee and replace it with a list of task_names/titles
+    #or we can do this on the html page...
+    # for task in tasks, no because an employee is only iterated through once, we want the titles in a list all ready to go for display
+    return render(request, "superuser.html", {'employees': new_employee_list, 'group_tasks': clean_group_tasks})
 
 
 def handlelogin(request):
