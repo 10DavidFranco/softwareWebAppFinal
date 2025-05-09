@@ -9,5 +9,6 @@ urlpatterns = [
     path('superuser/<int:employee_id>/', views.superuser, name="superuser"),
     path('handlelogin/', views.handlelogin, name= "handlelogin"),
     path('handledelete/admin/<int:admin_id>/employee/<int:employee_id>/task/<int:task_id>/', views.handledelete, name="handledelete"),
-    path('handlecreate/admin/<int:admin_id>', views.handlecreate, name="handlecreate")
+    path('handlecreate/admin/<int:admin_id>', views.handlecreate, name="handlecreate"),
+    path('handleedit/', views.handleedit, name="handleedit")
 ]

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Employee, Task
 import sqlite3
+import json
 
 
 # Create your views here.
@@ -161,21 +162,25 @@ def superuser(request, employee_id):
     print("NOWWWW it's done...")
     print(new_employee_list)
     
-    cursor.execute("SELECT name FROM tasktrek_task WHERE is_team = ?", ["True"])
+    cursor.execute("SELECT * FROM tasktrek_task WHERE is_team = ?", ["True"])
     group_tasks = cursor.fetchall()
+    print("///////////////////////////////////////////////////")
     print("Look at my group tasks")
     #print(len(group_tasks))
-    print(type(group_tasks))
-
+    print(group_tasks)
+    #We need to pass in the id's of the group tasks so the edit button can work...
 
     clean_group_tasks = []
     for group_task in group_tasks:
-        print(type(group_task))
-        group_task_copy = str(group_task)
-        print(group_task_copy)
-        good_copy = group_task_copy[2:len(group_task_copy)-3]
-        print(good_copy)
-        clean_group_tasks.append(good_copy)
+        gt_entry = {}
+        gt_entry['id'] = group_task[0]
+        gt_entry['title'] = group_task[3]
+        gt_entry['description'] = group_task[1]
+        
+        print("ASSEMBLED GT ENTRY")
+        print(gt_entry)
+        print("$$$$$$$$$$")
+        clean_group_tasks.append(gt_entry)
     print(clean_group_tasks)
 
     #Need to go into the task_list of each employee and replace it with a list of task_names/titles
@@ -368,4 +373,32 @@ def handlecreate(request, admin_id):
         return redirect("superuser", employee_id = admin_id)
     
 
+def handleedit(request):
+    print("Handling edit")
+    print("Lets take a peek at the request...")
+    print(request)
+    data = json.loads(request.body)
+    print("What about data?")
+    print(data.get('data'))
+    #I need to pass in the id...all the way here from the html-> js -> python
+    new_title = data.get('title')
+    new_description = data.get('desc')
+    admin_id = data.get('admin_id')
+    task_id = data.get('task_id')
+
+    print("Alright lets check our stuff")
+    print(new_title)
+    print(new_description)
+    print(admin_id)
+    print(task_id)
+
+    #Look up Task objects based on id
+    task_to_change = Task.objects.get(id=task_id)
     
+    #Update fields
+    task_to_change.name = new_title
+    task_to_change.description = new_description
+    task_to_change.save()
+    #Render admin view? Which would also require passing in the adminid...
+
+    return HttpResponse("Ok", status=200)

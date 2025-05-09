@@ -1,4 +1,8 @@
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
 document.querySelectorAll('.edit-btn').forEach(editButton => {
+    let task_id = editButton.getAttribute('data-taskid')
+    let admin_id = editButton.getAttribute('data-adminid')
     editButton.addEventListener('click', function () {
         const taskItem = editButton.closest('li'); // Target the <li> containing the task
         const taskTitle = taskItem.querySelector('.task-title'); // Get task title
@@ -43,7 +47,26 @@ document.querySelectorAll('.edit-btn').forEach(editButton => {
                 // Update title and description
                 taskTitle.textContent = titleInput.value;
                 taskDescription.textContent = descriptionTextarea.value;
+                let new_title = titleInput.value;
+                let new_description = descriptionTextarea.value;
+                //Store these values and make a post request...
+                console.log(new_title)
+                console.log(new_description)
+                fetch('/handleedit/', {
+                    method: "POST",
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify({
+                        'data': "hi",
+                        'title' : new_title,
+                        'desc' : new_description,
+                        'admin_id' : admin_id,
+                        'task_id': task_id
 
+                    })
+                })
                 // Remove editing elements
                 taskItem.removeChild(titleInput);
                 taskItem.removeChild(descriptionTextarea);
@@ -77,3 +100,7 @@ document.querySelectorAll('.task-checkbox').forEach(checkbox => {
         }
     });
 });
+
+function edithandler(){
+
+}

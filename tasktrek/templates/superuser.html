@@ -86,7 +86,7 @@
                                 <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date|date:"F j, Y" }}</p>
                                 <div class="action-buttons"> 
                                     <button class="approve-btn">Approve</button>
-                                    <button class="edit-btn">Edit</button>
+                                    <button  data-adminid = {{admin_id}} data-taskid = {{task.id}} class="edit-btn">Edit</button>
                                     <button class="deny-btn">Delete</button>
                                 </div>
                             </li>
