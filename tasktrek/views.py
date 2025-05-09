@@ -34,6 +34,7 @@ def user(request, employee_id):
         gt_entry['id'] = group_task[0]
         gt_entry['name'] = group_task[3]
         gt_entry['description'] = group_task[1]
+        gt_entry['due_date'] = group_task[2]
         clean_group_tasks.append(gt_entry)
         
     print(clean_group_tasks)
@@ -176,6 +177,7 @@ def superuser(request, employee_id):
         gt_entry['id'] = group_task[0]
         gt_entry['title'] = group_task[3]
         gt_entry['description'] = group_task[1]
+        gt_entry['due_date'] = group_task[2]
         
         print("ASSEMBLED GT ENTRY")
         print(gt_entry)

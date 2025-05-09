@@ -83,7 +83,7 @@
                                 <!-- Task Title and Description -->
                                 <span class="task-title">{{ task.title }}</span>
                                 <p class="task-description">{{ task.description }}</p>
-                                <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date|date:"F j, Y" }}</p>
+                                <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date}}</p>
                                 <div class="action-buttons"> 
                                     <button class="approve-btn">Approve</button>
                                     <button  data-adminid = {{admin_id}} data-taskid = {{task.id}} class="edit-btn">Edit</button>
@@ -102,7 +102,7 @@
                                 <li>
                                 {{task.description}} 
                                 <div class="action-buttons">
-                                    <form action="/handledelete/" method="post">
+                                    <form action="{%url 'handledelete' admin_id=admin_id employee_id=employee.id task_id=task.id %}" method="post">
                                         {% csrf_token %}
                                         <button class="approve-btn" name="delete" type="submit">Approve</button>
                                     </form>
