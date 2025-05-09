@@ -18,7 +18,33 @@
             <div class="profile-picture"></div>
         </div>
     </div>
+    <!-- Add Task Card -->
+    <div class="add-task-card">
+        <h2>Add New Task</h2>
+            <!-- Select Task Type -->
+            <label for="task-type">Task Type:</label>
+            <select id="task-type" name="task_type" required>
+                <option value="team">Team Task</option>
+                <option value="individual">Individual Task</option>
+            </select>
 
+            <!-- Select Employee (if Individual Task) -->
+            <label for="employee-select">Assign to Employee:</label>
+            <select id="employee-select" name="employee_id">
+                <option value="" selected disabled>Select Employee...</option>
+                {% for employee in employees %}
+                <option value="{{ employee.id }}">{{ employee.name }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Task Description -->
+            <label for="task-description">Task Description:</label>
+            <textarea id="task-description" name="task_description" rows="3" required></textarea>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="add-task-submit-btn">Add Task</button>
+        </form>
+    </div>
     <!-- Admin Content -->
     <div class="admin-container">
         <!-- Task and User Management Section -->
@@ -37,16 +63,19 @@
                     <div class="user-card">
                         <div class="card-header">
                             <h3>{{employee.name}}</h3>
-                            <button class="add-task-btn" title="Add Task">+</button>
+                            <!--<button class="add-task-btn" title="Add Task">+</button>-->
                         </div>
                         <p>Email: jordan@example.com</p>
                         <h4>Team Tasks</h4>
                         <ul class="task-list">
                             {% for task in group_tasks %}
                             <li>
-                                {{ task }} 
+                                <!-- Task Title and Description -->
+                                <span class="task-title">{{ task.title }}</span>
+                                <p class="task-description">{{ task.description }}</p>
                                 <div class="action-buttons"> 
-                                    <button class="approve-btn" >Approve</button> 
+                                    <button class="approve-btn">Approve</button>
+                                    <button class="edit-btn">Edit</button>
                                     <button class="deny-btn">Delete</button>
                                 </div>
                             </li>
@@ -90,5 +119,6 @@
             </div>
         </div>
     </div>
+    <script src="{% static 'js/task.js' %}"></script>
 </body>
 </html>

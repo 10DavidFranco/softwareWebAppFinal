@@ -151,10 +151,19 @@ body {
     justify-content: space-between; /* Place title and checkbox apart */
     margin-bottom: 0.5rem;
 }
+.task-header {
+    display: flex; /* Enables horizontal alignment */
+    align-items: center; /* Vertically centers the checkbox with the title */
+    justify-content: space-between; /* Pushes items to opposite edges if needed */
+    padding: 0.375rem; /* Optional padding for spacing */
+}
+
 
 .task-checkbox {
     width: 16px; /* Size of checkbox */
     height: 16px;
+    margin-left: 1rem; /* Space between the title and checkbox */
+    transform: scale(1.2); /* Makes the checkbox slightly larger */
     cursor: pointer; /* Hover indication for clicking */
     accent-color: #fb8500; /* Optional: Change checkbox appearance to match design */
 }
@@ -167,6 +176,11 @@ body {
 .task-card.completed h3 {
     text-decoration: line-through; /* Add strikethrough when completed */
     color: #9E9E9E; /* Gray out completed task title */
+}
+.task-card.completed {
+    background-color: #e6ffe6; /* Light green background for completed tasks */
+    color: #888888; /* Gray text for readability */
+    text-decoration: line-through; /* Strike-through text */
 }
 
 /* Admin Container */
@@ -250,8 +264,9 @@ body {
     margin-bottom: 0.5rem;
     border-radius: 8px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -281,6 +296,16 @@ body {
     font-size: 0.9rem;
 }
 
+.edit-btn{
+    background-color: #1d3557;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem; 
+}
+
 .approve-btn:hover {
     background-color: #219ebc;
 }
@@ -288,6 +313,12 @@ body {
 .deny-btn:hover {
     background-color: #e63946;
 }
+
+.edit-btn:hover{
+    background-color: #042757;
+}
+
+
 /* Section Header: Flexbox alignment between title and button */
 .section-header {
     display: flex;
@@ -311,4 +342,103 @@ body {
 
 .add-team-task-btn:hover {
     background-color: #e63946;
+}
+/* Add Task Card */
+.add-task-card {
+    background-color: #219ebc;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 2rem;
+}
+
+.add-task-card h2 {
+    font-size: 1.8rem;
+    color: #ffb703;
+    margin-bottom: 1rem;
+}
+
+.add-task-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.add-task-card label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.add-task-card select,
+.add-task-card textarea {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+}
+
+.add-task-card .add-task-submit-btn {
+    background-color: #fb8500;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.3rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-task-card .add-task-submit-btn:hover {
+    background-color: #e63946;
+}
+
+/* Input field for editing the title */
+.edit-title-input {
+    display: block;
+    margin-bottom: 0.75rem; /* Increased margin for better spacing */
+    padding: 0.5rem; /* Slightly increased padding */
+    font-size: 0.9rem;
+    width: 100%; /* Changed '95%' to '100%' for better alignment */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Textarea for editing the description */
+.edit-description-textarea {
+    display: block;
+    margin-bottom: 0.75rem; /* Increased margin for consistency */
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    width: 100%; /* Changed '95%' to '100%' for alignment with title input */
+    height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+}
+
+/* Save and Cancel Buttons */
+.save-btn, .cancel-btn {
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.save-btn {
+    background-color: #8ecae6; /* Blue button */
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #f8d7da; /* Light red button */
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: #219ebc; /* Darker shade on hover */
+}
+
+.cancel-btn:hover {
+    background-color: #f54242;
 }

@@ -34,10 +34,13 @@
             {% for task in group_tasks %}
                 
                 <div class="task-card">
-                    <h3>{{task.name}}</h3>
-                    <p>{{task.description}}</p>
-                </div>
-                
+                    <div class="task-header">
+                        <h3>{{ task.name }}</h3>
+                        <!-- Checkbox for Completion -->
+                        <input type="checkbox" class="task-checkbox" {% if task.completed %}checked{% endif %}>
+                    </div>
+                    <p>{{ task.description }}</p>
+                </div> 
             {% endfor %}
 
             {% endif %}
@@ -55,8 +58,12 @@
             {% for task in tasks %}
                 {% if task.is_team == 0 %}
                 <div class="task-card">
-                    <h3>{{task.name}}</h3>
-                    <p>{{task.description}}</p>
+                    <div class="task-header">
+                        <h3>{{ task.name }}</h3>
+                        <!-- Checkbox for Completion -->
+                        <input type="checkbox" class="task-checkbox" {% if task.completed %}checked{% endif %}>
+                    </div>
+                    <p>{{ task.description }}</p>
                 </div>
                 {% endif %}
             {% endfor %}
