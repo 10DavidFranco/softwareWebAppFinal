@@ -21,14 +21,15 @@
     <!-- Add Task Card -->
     <div class="add-task-card">
         <h2>Add New Task</h2>
-        <form>
+        <form action="{% url 'handlecreate' admin_id=admin_id %}" method="post">
+            {% csrf_token %}
             <!-- Task Title -->
             <label for="task-title">Task Title:</label>
             <input type="text" id="task-title" name="task_title" placeholder="Enter Task Title" required>
 
             <!-- Task Due Date -->
             <label for="due-date">Due Date:</label>
-            <input type="date" id="due-date" name="due_date" required>
+            <input type="text" id="due-date" name="due_date" required>
 
             <!-- Select Task Type -->
             <label for="task-type">Task Type:</label>

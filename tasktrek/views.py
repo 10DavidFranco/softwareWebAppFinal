@@ -126,7 +126,7 @@ def superuser(request, employee_id):
     #Make an array of dictionaries, each index will have a dictionary with id and desc
     for employee in clean_employee_list:
         if(employee[3] == ""):
-            break
+            continue
         else:
             clean_task_list = employee[3].split(",")
             task_list = []
@@ -304,4 +304,61 @@ def handledelete(request, admin_id, employee_id, task_id):
 
 
     #Perhaps becuase we have a blank argument, they are being positionally shifted over 1?
+    return redirect("superuser", employee_id = admin_id)
+
+
+
+def handlecreate(request, admin_id):
+    print("Creating new task!")
+    selected_employee = request.POST.get('employee_id')
+
+
+    #Get the employee!!!
+    print("Look at the employee they chose")
+    print(selected_employee)
+
+    #Now get the info to create the task
+    title = request.POST.get('task_title')
+    date = request.POST.get('due_date')
+    t_type = request.POST.get('task_type')
+    description = request.POST.get('task_description')
+    print("Look what they sent me...")
+    print(title)
+    print(date)
+    print(t_type)
+    print(description)
+
+    is_team = None
+    if(t_type == "individual"):
+        is_team = False
+    else:
+        is_team = True
+    print(is_team)
+
+    #Now create the task!!!
+    new_task = Task.objects.create(name= title, description= description, due_date=date, is_complete=False, is_team=is_team)
+    
+
+
+    #Now update the employee and save
+    employee = Employee.objects.get(id=selected_employee)
+    print("Alright lets check out what tasks this employee currently has...")
+    print(employee.tasks)
+    current_tasks = employee.tasks
+    print(type(current_tasks))
+    
+    print("This is the id of the new task")
+    print(new_task.id)
+    new_entry = new_task.id
+
+    if(current_tasks == ""):
+        employee.tasks = new_entry
+    else:
+        employee.tasks = current_tasks + "," + str(new_entry)
+
+    employee.save()
+
+
+    #Lastly rerender
+    #return HttpResponse("Ok", status=200)
     return redirect("superuser", employee_id = admin_id)

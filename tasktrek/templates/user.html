@@ -60,7 +60,7 @@
 
             {% else %}
             {% for task in tasks %}
-                {% if task.is_team == 0 %}
+                {% if task.is_team == 'False' %}
                 <div class="task-card">
                     <div class="task-header">
                         <h3>{{ task.name }}</h3>
