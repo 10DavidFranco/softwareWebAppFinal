@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .models import Employee, Task
 import sqlite3
 
@@ -16,6 +17,28 @@ def login(request):
 def user(request, employee_id):
     dataConnector = sqlite3.connect('db.sqlite3')
     cursor = dataConnector.cursor()
+
+    cursor.execute("SELECT * FROM tasktrek_task WHERE is_team = ?", ["True"])
+    group_tasks = cursor.fetchall()
+    print("Look at my group tasks")
+    print(group_tasks)
+    print(type(group_tasks))
+
+
+    clean_group_tasks = []
+    
+    for group_task in group_tasks:
+        gt_entry = {}
+        print(type(group_task))
+        gt_entry['id'] = group_task[0]
+        gt_entry['name'] = group_task[4]
+        gt_entry['description'] = group_task[1]
+        clean_group_tasks.append(gt_entry)
+        
+    print(clean_group_tasks)
+
+
+
     print("Look at my employee id")
     print(employee_id)
     #Now look them up and get their info
@@ -28,51 +51,64 @@ def user(request, employee_id):
     print("Look at my employees tasks...")
     print(employee_tasks)
     print(type(employee_tasks))
+    if employee_tasks != "":
+        clean_employee_tasks = employee_tasks.split(",")
+        print("Look at my REAL employee tasks...")
+        print(clean_employee_tasks)
 
-    clean_employee_tasks = employee_tasks.split(",")
-    print("Look at my REAL employee tasks...")
-    print(clean_employee_tasks)
+        task_list = Task.objects.all()
+        clean_task_list = []
 
-    task_list = Task.objects.all()
-    clean_task_list = []
+        
 
-    
+        for task in task_list:
+            copy_task = str(task)
+            clean_task_list.append(copy_task.split("~"))
 
-    for task in task_list:
-        copy_task = str(task)
-        clean_task_list.append(copy_task.split("~"))
-
-    print("Cleaned up task list")
-    print(clean_task_list)
-
-
-    #IF task id matches, store it in task array to be passed into template
-    #For every task id a user has, get the appropriate task
-    task_array = []
-    for a_task_id in clean_employee_tasks:
-        for a_task in clean_task_list:
-            if a_task_id == a_task[0]:
-                task_array.append(Task.objects.get(id=a_task_id))
-
-    print("All tasks compiled!!!")
-    print(type(task_array[0]))
-    #We still need to handle edge cases...but its a start
+        print("Cleaned up task list")
+        print(clean_task_list)
 
 
+        #IF task id matches, store it in task array to be passed into template
+        #For every task id a user has, get the appropriate task
+        task_array = []
+        for a_task_id in clean_employee_tasks:
+            for a_task in clean_task_list:
+                if a_task_id == a_task[0]:
+                    task_array.append(Task.objects.get(id=a_task_id))
 
-    #Need to find employee tasks from task_list and send them to template in variable calld tasks
+        print("All tasks compiled!!!")
+        print(type(task_array[0]))
+        #We still need to handle edge cases...but its a start
 
-    context = {
-        'tasks' : task_array,
-        'name' : employee_data[1]
-    }
-    return render(request, "user.html", context)
+
+
+        #Need to find employee tasks from task_list and send them to template in variable calld tasks
+
+        context = {
+            'tasks' : task_array,
+            'name' : employee_data[1],
+            'group_tasks': clean_group_tasks
+        }
+        return render(request, "user.html", context)
+    else:
+        context = {
+            'tasks' : "",
+            'name' : employee_data[1],
+            'group_tasks': clean_group_tasks
+            
+        }
+        return render(request, "user.html", context)
 
 def superuser(request, employee_id):
     dataConnector = sqlite3.connect('db.sqlite3')
     cursor = dataConnector.cursor()
+
+
+
     print("Woah look at Mr big shot over here")
     print(employee_id)
+    print(type(employee_id))
     employees = Employee.objects.all()
     tasks = Task.objects.all()
 
@@ -87,18 +123,24 @@ def superuser(request, employee_id):
         clean_employee_list.append(clean_copy.split("~"))
     print(clean_employee_list)
     #Need to clean the task list for searching
-
+    #Make an array of dictionaries, each index will have a dictionary with id and desc
     for employee in clean_employee_list:
-        clean_task_list = employee[3].split(",")
-        task_words = []
-        for task_id in clean_task_list:
-            #IF WE ASSIGN GROUP TASKS WE NEED TO KEEP THIS CHECK IN MIND....I AM CHECKING FOR TEXT NOT BOOL , MAYBVE DELETE DUMMY TASKS
-            cursor.execute("SELECT name FROM tasktrek_task WHERE id = ? AND is_team = ?", [task_id, "False"])
-            task_words.append(cursor.fetchone()[0])
-            print(task_id)
-        print("Look at my task words")
-        print(task_words)
-        employee[3] = task_words
+        if(employee[3] == ""):
+            break
+        else:
+            clean_task_list = employee[3].split(",")
+            task_list = []
+            for task_id in clean_task_list:
+                #IF WE ASSIGN GROUP TASKS WE NEED TO KEEP THIS CHECK IN MIND....I AM CHECKING FOR TEXT NOT BOOL , MAYBVE DELETE DUMMY TASKS
+                cursor.execute("SELECT name FROM tasktrek_task WHERE id = ? AND is_team = ?", [task_id, "False"])
+                task_entry = {}
+                task_entry['id'] = task_id
+                task_entry['description'] = cursor.fetchone()[0]
+                task_list.append(task_entry)
+                print(task_id)
+            print("Look at my task list")
+            print(task_list)
+            employee[3] = task_list
             
     print("Finally my list is made!!!")
     print(clean_employee_list)
@@ -139,7 +181,7 @@ def superuser(request, employee_id):
     #Need to go into the task_list of each employee and replace it with a list of task_names/titles
     #or we can do this on the html page...
     # for task in tasks, no because an employee is only iterated through once, we want the titles in a list all ready to go for display
-    return render(request, "superuser.html", {'employees': new_employee_list, 'group_tasks': clean_group_tasks})
+    return render(request, "superuser.html", {'employees': new_employee_list, 'group_tasks': clean_group_tasks, 'admin_id': employee_id})
 
 
 def handlelogin(request):
@@ -197,4 +239,69 @@ def handlelogin(request):
         return redirect("user", employee_id= employee_id)
     #Render appropriate view
     #return render(request, "test.html")
-    
+
+
+def handledelete(request, admin_id, employee_id, task_id):
+    print("Handling delete")
+    print("Id of admin")
+    print(admin_id)
+    print("Employee id")
+    print(employee_id)
+    print("Task id")
+    print(task_id)
+    print(type(task_id))
+    #Need to adjust employee building to include taskids so that they can be used here!
+    #Need to rerender superuser view!!!! Which means we need to find a way to pass the admin id to this function!!!
+
+
+    #Get employee task list
+    dataConnector = sqlite3.connect('db.sqlite3')
+    cursor = dataConnector.cursor()
+    print("Look at my employee id")
+    print(employee_id)
+    #Now look them up and get their info
+    employees = Employee.objects.all()
+    my_employee = None
+    for employee in employees:
+        if employee.id == employee_id:
+            my_employee = employee
+    print("Look at my employee data")
+    print(my_employee)
+
+    employee_tasks = my_employee.tasks
+    print("Look at my employees tasks...")
+    print(employee_tasks)
+    print(type(employee_tasks))
+
+    clean_employee_tasks = employee_tasks.split(",")
+    print("Look at my REAL employee tasks...")
+    print(clean_employee_tasks)
+    #Find task with matching id
+    new_tasks = []
+    for task in clean_employee_tasks:
+        if task == str(task_id):
+            print("Found the task to remove:")
+            print(task)
+        else:
+            print("Not you")
+            new_tasks.append(task)
+    #Remove and reassign
+    print("Look at my new tasks:")
+    print(new_tasks)
+    #Make into string text and push to db
+    string_tasks = ','.join(new_tasks)
+    print("Made into string")
+    print(string_tasks)
+
+
+
+    #The real meat and potatoes
+    employee = Employee.objects.get(id=employee_id)
+    employee.tasks = string_tasks
+    employee.save()
+    #Rerender
+    #return HttpResponse("Ok", status=200)
+
+
+    #Perhaps becuase we have a blank argument, they are being positionally shifted over 1?
+    return redirect("superuser", employee_id = admin_id)

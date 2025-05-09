@@ -26,14 +26,21 @@
             <!-- Decorative Background Label -->
             <div class="background-label">Team Tasks</div>
             <!-- Example Tasks -->
-            {% for task in tasks %}
-                {% if task.is_team == 1 %}
+
+            {% if group_tasks == "" %}
+
+
+            {% else %}
+            {% for task in group_tasks %}
+                
                 <div class="task-card">
                     <h3>{{task.name}}</h3>
                     <p>{{task.description}}</p>
                 </div>
-                {% endif %}
+                
             {% endfor %}
+
+            {% endif %}
         </div>
 
         <!-- Individual Tasks Section -->
@@ -41,7 +48,10 @@
             <!-- Decorative Background Label -->
             <div class="background-label">Individual Tasks</div>
             <!-- Example Tasks -->
+            {% if tasks == "" %}
 
+
+            {% else %}
             {% for task in tasks %}
                 {% if task.is_team == 0 %}
                 <div class="task-card">
@@ -50,6 +60,7 @@
                 </div>
                 {% endif %}
             {% endfor %}
+            {% endif %}
         </div>
     </div>
 </body>
