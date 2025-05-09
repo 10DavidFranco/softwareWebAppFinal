@@ -31,7 +31,7 @@ def user(request, employee_id):
         gt_entry = {}
         print(type(group_task))
         gt_entry['id'] = group_task[0]
-        gt_entry['name'] = group_task[4]
+        gt_entry['name'] = group_task[3]
         gt_entry['description'] = group_task[1]
         clean_group_tasks.append(gt_entry)
         
@@ -330,35 +330,42 @@ def handlecreate(request, admin_id):
 
     is_team = None
     if(t_type == "individual"):
-        is_team = False
-    else:
-        is_team = True
-    print(is_team)
+        is_team = "False"
+        #Now create the task!!!
+        new_task = Task.objects.create(name= title, description= description, due_date=date, is_complete="False", is_team=is_team)
+        
 
-    #Now create the task!!!
-    new_task = Task.objects.create(name= title, description= description, due_date=date, is_complete=False, is_team=is_team)
+
+        #Now update the employee and save
+        employee = Employee.objects.get(id=selected_employee)
+        print("Alright lets check out what tasks this employee currently has...")
+        print(employee.tasks)
+        current_tasks = employee.tasks
+        print(type(current_tasks))
+        
+        print("This is the id of the new task")
+        print(new_task.id)
+        new_entry = new_task.id
+
+        if(current_tasks == ""):
+            employee.tasks = new_entry
+        else:
+            employee.tasks = current_tasks + "," + str(new_entry)
+
+        employee.save()
+
+
+        #Lastly rerender
+        #return HttpResponse("Ok", status=200)
+        return redirect("superuser", employee_id = admin_id)
+    else:
+        is_team = "True"
+        new_task = Task.objects.create(name= title, description= description, due_date=date, is_complete="False", is_team=is_team)
+        new_task.save()
+        
+        #Wait group tasks dont need to be assigned to people, they jsut need to be created in the databse
+        
+        return redirect("superuser", employee_id = admin_id)
     
 
-
-    #Now update the employee and save
-    employee = Employee.objects.get(id=selected_employee)
-    print("Alright lets check out what tasks this employee currently has...")
-    print(employee.tasks)
-    current_tasks = employee.tasks
-    print(type(current_tasks))
     
-    print("This is the id of the new task")
-    print(new_task.id)
-    new_entry = new_task.id
-
-    if(current_tasks == ""):
-        employee.tasks = new_entry
-    else:
-        employee.tasks = current_tasks + "," + str(new_entry)
-
-    employee.save()
-
-
-    #Lastly rerender
-    #return HttpResponse("Ok", status=200)
-    return redirect("superuser", employee_id = admin_id)
