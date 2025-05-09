@@ -21,6 +21,15 @@
     <!-- Add Task Card -->
     <div class="add-task-card">
         <h2>Add New Task</h2>
+        <form>
+            <!-- Task Title -->
+            <label for="task-title">Task Title:</label>
+            <input type="text" id="task-title" name="task_title" placeholder="Enter Task Title" required>
+
+            <!-- Task Due Date -->
+            <label for="due-date">Due Date:</label>
+            <input type="date" id="due-date" name="due_date" required>
+
             <!-- Select Task Type -->
             <label for="task-type">Task Type:</label>
             <select id="task-type" name="task_type" required>
@@ -73,6 +82,7 @@
                                 <!-- Task Title and Description -->
                                 <span class="task-title">{{ task.title }}</span>
                                 <p class="task-description">{{ task.description }}</p>
+                                <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date|date:"F j, Y" }}</p>
                                 <div class="action-buttons"> 
                                     <button class="approve-btn">Approve</button>
                                     <button class="edit-btn">Edit</button>

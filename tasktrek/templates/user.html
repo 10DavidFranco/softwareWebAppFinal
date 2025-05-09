@@ -36,10 +36,14 @@
                 <div class="task-card">
                     <div class="task-header">
                         <h3>{{ task.name }}</h3>
+                        <!-- Display Due Date -->
+                        <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date|date:"F j, Y" }}</p>
                         <!-- Checkbox for Completion -->
                         <input type="checkbox" class="task-checkbox" {% if task.completed %}checked{% endif %}>
                     </div>
                     <p>{{ task.description }}</p>
+                    <!-- Display Due Date -->
+                    
                 </div> 
             {% endfor %}
 
@@ -60,10 +64,13 @@
                 <div class="task-card">
                     <div class="task-header">
                         <h3>{{ task.name }}</h3>
+                        <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date|date:"F j, Y" }}</p>
                         <!-- Checkbox for Completion -->
                         <input type="checkbox" class="task-checkbox" {% if task.completed %}checked{% endif %}>
                     </div>
                     <p>{{ task.description }}</p>
+                    <!-- Display Due Date -->
+                    <!--<p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date|date:"F j, Y" }}</p>-->
                 </div>
                 {% endif %}
             {% endfor %}
