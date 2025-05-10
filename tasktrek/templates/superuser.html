@@ -101,19 +101,24 @@
                                 {% else %}
                                 <li>
                                 {{task.description}} 
-                                <div class="action-buttons">
-                                    <form action="{%url 'handledelete' admin_id=admin_id employee_id=employee.id task_id=task.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button class="approve-btn" name="delete" type="submit">Approve</button>
-                                    </form>
-                                    <form action="{%url 'handledelete' admin_id=admin_id employee_id=employee.id task_id=task.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button  class="deny-btn" name="delete" type="submit">Delete</button>
-                                    </form>
-                                        
-                                        
-                                </div>
-                                </li>
+
+                                    {% if task.is_complete == "True" %}
+                                    <div class="action-buttons">
+                                        <form action="{%url 'handledelete' admin_id=admin_id employee_id=employee.id task_id=task.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button class="approve-btn" name="delete" type="submit">Approve</button>
+                                        </form>
+                                        <form action="{%url 'handledelete' admin_id=admin_id employee_id=employee.id task_id=task.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button  class="deny-btn" name="delete" type="submit">Delete</button>
+                                        </form> 
+                                    </div>
+                                    </li>
+                                    {% else %}
+
+                                    {% endif %}
+
+
                                 {% endif %}
                                 
 

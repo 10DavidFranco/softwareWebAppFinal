@@ -138,6 +138,8 @@ def superuser(request, employee_id):
                 task_entry = {}
                 task_entry['id'] = task_id
                 task_entry['description'] = cursor.fetchone()[0]
+                cursor.execute("SELECT is_complete FROM tasktrek_task WHERE id = ? AND is_team = ?", [task_id, "False"])
+                task_entry['is_complete'] = cursor.fetchone()[0]
                 task_list.append(task_entry)
                 print(task_id)
             print("Look at my task list")
