@@ -404,3 +404,26 @@ def handleedit(request):
     #Render admin view? Which would also require passing in the adminid...
 
     return HttpResponse("Ok", status=200)
+
+def handlecomplete(request):
+    print("Handling completion")
+    data = json.loads(request.body)
+    task_id = data.get('task_id')
+    completed = data.get('completion')
+    print("Task to be changed...")
+    print(task_id)
+    print("So it's done?")
+    print(completed)
+    
+
+
+    #Find task based on id and set is_complete to true...
+    task_to_complete = Task.objects.get(id=task_id)
+    
+    #Update fields
+    task_to_complete.is_complete = completed
+    
+    task_to_complete.save()
+
+    #We will just have to make it where no one has the same two individual tasks
+    return HttpResponse("Ok", status=200)

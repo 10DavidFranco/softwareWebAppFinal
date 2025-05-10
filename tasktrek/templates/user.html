@@ -39,6 +39,7 @@
                         <!-- Display Due Date -->
                         <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date }}</p>
                         <!-- Checkbox for Completion -->
+                         {% csrf_token %}
                         <input type="checkbox" class="task-checkbox" {% if task.completed %}checked{% endif %}>
                     </div>
                     <p>{{ task.description }}</p>
@@ -66,7 +67,8 @@
                         <h3>{{ task.name }}</h3>
                         <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date }}</p>
                         <!-- Checkbox for Completion -->
-                        <input type="checkbox" class="task-checkbox" {% if task.completed %}checked{% endif %}>
+                        <input data-taskid={{task.id}}  type="checkbox" class="task-checkbox" {% if task.completed %}checked{% endif %}>
+                        
                     </div>
                     <p>{{ task.description }}</p>
                     <!-- Display Due Date -->
@@ -77,5 +79,6 @@
             {% endif %}
         </div>
     </div>
+    <script src="{% static 'js/user.js' %}"></script>
 </body>
 </html>

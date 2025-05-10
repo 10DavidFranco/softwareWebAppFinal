@@ -1,5 +1,55 @@
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
+//for all checkboxes
+//get their task id attributes
+//make a fetch call to the views and update db
+document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+    //console.log("Hello checkbox")
+    checkbox.addEventListener('change', function () {
+        const taskCard = checkbox.closest('.task-card'); // Get the parent task card
+        const taskTitle = taskCard.querySelector('h3'); // Get the task's title
+        const task_id = checkbox.getAttribute("data-taskid");
+        if (checkbox.checked) {
+            // Mark the task as completed
+            console.log("Yaaaaay it's done")
+            taskCard.classList.add('completed');
+            fetch('/handlecomplete/', {
+                    method: "POST",
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify({
+                        'completion': "True",
+                        'task_id': task_id
+
+                    })
+            })
+        } else {
+            // Unmark the task as completed
+            console.log("Do we ever hit this?")
+            taskCard.classList.remove('completed');
+            fetch('/handlecomplete/', {
+                    method: "POST",
+                    headers: {
+                        'X-CSRFToken': csrftoken,
+                        'Content-Type': 'application/json' 
+                    },
+                    body: JSON.stringify({
+                        'completion': "False",
+                        'task_id': task_id
+
+                    })
+            })
+        }
+
+        //We'll jsut change the value to its opposite in the view
+        //Oh wait I was working on the wrong file...
+        
+        
+    });
+});
+
 document.querySelectorAll('.edit-btn').forEach(editButton => {
     let task_id = editButton.getAttribute('data-taskid')
     let admin_id = editButton.getAttribute('data-adminid')
@@ -86,21 +136,5 @@ document.querySelectorAll('.edit-btn').forEach(editButton => {
     });
 });
 // Add functionality to toggle task completion
-document.querySelectorAll('.task-checkbox').forEach(checkbox => {
-    checkbox.addEventListener('change', function () {
-        const taskCard = checkbox.closest('.task-card'); // Get the parent task card
-        const taskTitle = taskCard.querySelector('h3'); // Get the task's title
 
-        if (checkbox.checked) {
-            // Mark the task as completed
-            taskCard.classList.add('completed');
-        } else {
-            // Unmark the task as completed
-            taskCard.classList.remove('completed');
-        }
-    });
-});
 
-function edithandler(){
-
-}
