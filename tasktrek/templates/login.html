@@ -6,7 +6,10 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
+            background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,11 +18,11 @@
         }
 
         .login-container {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.85);
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+            width: 320px;
         }
 
         .login-container h2 {
@@ -40,22 +43,23 @@
         .login-container input[type="submit"] {
             width: 100%;
             padding: 10px;
-            background-color: #4CAF50;
-            color: white;
+            background-color: #000;
+            color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-weight: bold;
         }
 
         .login-container input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #333;
         }
 
         .footer {
             margin-top: 10px;
             text-align: center;
             font-size: 12px;
-            color: #888;
+            color: #555;
         }
     </style>
 </head>
@@ -63,7 +67,6 @@
     <div class="login-container">
         <h2>TaskTrek Login</h2>
         <form action="/handlelogin/" method="post">
-            {% csrf_token %}
             <input type="text" name="login1" placeholder="Username" required>
             <input type="password" name="login2" placeholder="Password" required>
             <input type="submit" value="Login">
