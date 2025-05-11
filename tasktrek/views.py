@@ -431,3 +431,30 @@ def handlecomplete(request):
 
     #We will just have to make it where no one has the same two individual tasks
     return HttpResponse("Ok", status=200)
+
+
+def handlesignup(request):
+    #Get information from post request
+    #username
+    username = request.POST.get('username')
+    #password
+    password = request.POST.get('password')
+    #is_admin ("False")
+    #tasks (None to start)
+    #name processing (Parsed from name')
+    name = request.POST.get("name")
+
+    print("Checking data...")
+    print(name)
+    print(type(name))
+    print(username)
+    print(type(username))
+    print(password)
+    print(type(password))
+
+    #Update employee model
+    new_user = Employee(name=name, is_admin=False, tasks="", username=username, password=int(password))
+    new_user.save()
+
+    #Once employee added, render login form
+    return redirect("login")

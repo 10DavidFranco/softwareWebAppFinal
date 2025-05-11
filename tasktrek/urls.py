@@ -12,5 +12,6 @@ urlpatterns = [
     path('handledelete/admin/<int:admin_id>/employee/<int:employee_id>/task/<int:task_id>/', views.handledelete, name="handledelete"),
     path('handlecreate/admin/<int:admin_id>', views.handlecreate, name="handlecreate"),
     path('handleedit/', views.handleedit, name="handleedit"),
-    path('handlecomplete/', views.handlecomplete, name="handlecomplete")
+    path('handlecomplete/', views.handlecomplete, name="handlecomplete"),
+    path('handlesignup/', views.handlesignup, name="handlesignup"),
 ]
