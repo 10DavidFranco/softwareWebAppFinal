@@ -59,7 +59,10 @@ document.querySelectorAll('.edit-btn').forEach(editButton => {
         const taskTitle = taskItem.querySelector('.task-title'); // Get task title
         const taskDescription = taskItem.querySelector('.task-description'); // Get task description
         const actionButtons = taskItem.querySelector('.action-buttons');
-
+        console.log(taskItem)
+        console.log(taskTitle)
+        console.log(taskDescription)
+        console.log(actionButtons)
         // Check if there are existing input fields
         if (!taskItem.querySelector('input') && !taskItem.querySelector('textarea')) {
             // Create input field for title editing

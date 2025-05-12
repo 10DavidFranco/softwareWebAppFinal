@@ -99,9 +99,10 @@
                                 {% if task.id == "" %}
                                 
                                 {% else %}
-                                <li>
+                                
                                 
                                     {% if task.is_complete == "True" %}
+                                    <li>
                                     <span class="task-title">{{ task.name }}</span>
                                     <p class="task-description">{{ task.description }}</p>
                                     <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date}}</p>
@@ -117,17 +118,19 @@
                                         </form> 
 
                                     </div>
-                                    
+                                    </li>
                                     {% else %}
+                                    <li>
                                     <span class="task-title">{{ task.name }}</span>
                                     <p class="task-description">{{ task.description }}</p>
                                     <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date}}</p>
                                     <div class="action-buttons">
                                         <button  data-adminid = {{admin_id}} data-taskid = {{task.id}} class="edit-btn">Edit</button>
                                     </div>
+                                    </li>
                                     {% endif %}
 
-                                </li>
+                                
                                 {% endif %}
                                 
 
