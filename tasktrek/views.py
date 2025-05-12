@@ -139,7 +139,11 @@ def superuser(request, employee_id):
                 cursor.execute("SELECT name FROM tasktrek_task WHERE id = ? AND is_team = ?", [task_id, "False"])
                 task_entry = {}
                 task_entry['id'] = task_id
+                task_entry['name'] = cursor.fetchone()[0]
+                cursor.execute("SELECT description FROM tasktrek_task WHERE id = ? AND is_team = ?", [task_id, "False"])
                 task_entry['description'] = cursor.fetchone()[0]
+                cursor.execute("SELECT due_date FROM tasktrek_task WHERE id = ? AND is_team = ?", [task_id, "False"])
+                task_entry['due_date'] = cursor.fetchone()[0]
                 cursor.execute("SELECT is_complete FROM tasktrek_task WHERE id = ? AND is_team = ?", [task_id, "False"])
                 task_entry['is_complete'] = cursor.fetchone()[0]
                 task_list.append(task_entry)

@@ -75,7 +75,7 @@
                             <h3>{{employee.name}}</h3>
                             <!--<button class="add-task-btn" title="Add Task">+</button>-->
                         </div>
-                        <p>Email: jordan@example.com</p>
+                        
                         <h4>Team Tasks</h4>
                         <ul class="task-list">
                             {% for task in group_tasks %}
@@ -86,7 +86,7 @@
                                 <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date}}</p>
                                 <div class="action-buttons"> 
                                     <button class="approve-btn">Approve</button>
-                                    <button  data-adminid = {{admin_id}} data-taskid = {{task.id}} class="edit-btn">Edit</button>
+                                    <button data-adminid = {{admin_id}} data-taskid = {{task.id}} class="edit-btn">Edit</button>
                                     <button class="deny-btn">Delete</button>
                                 </div>
                             </li>
@@ -100,25 +100,34 @@
                                 
                                 {% else %}
                                 <li>
-                                {{task.description}} 
-
+                                
                                     {% if task.is_complete == "True" %}
+                                    <span class="task-title">{{ task.name }}</span>
+                                    <p class="task-description">{{ task.description }}</p>
+                                    <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date}}</p>
                                     <div class="action-buttons">
                                         <form action="{%url 'handledelete' admin_id=admin_id employee_id=employee.id task_id=task.id %}" method="post">
                                             {% csrf_token %}
                                             <button class="approve-btn" name="delete" type="submit">Approve</button>
                                         </form>
+                                        <button data-adminid = {{admin_id}} data-taskid = {{task.id}} class="edit-btn">Edit</button>
                                         <form action="{%url 'handledelete' admin_id=admin_id employee_id=employee.id task_id=task.id %}" method="post">
                                             {% csrf_token %}
-                                            <button  class="deny-btn" name="delete" type="submit">Delete</button>
+                                            <button class="deny-btn" name="delete" type="submit">Delete</button>
                                         </form> 
-                                    </div>
-                                    </li>
-                                    {% else %}
 
+                                    </div>
+                                    
+                                    {% else %}
+                                    <span class="task-title">{{ task.name }}</span>
+                                    <p class="task-description">{{ task.description }}</p>
+                                    <p class="task-due-date"><strong>Due Date:</strong> {{ task.due_date}}</p>
+                                    <div class="action-buttons">
+                                        <button  data-adminid = {{admin_id}} data-taskid = {{task.id}} class="edit-btn">Edit</button>
+                                    </div>
                                     {% endif %}
 
-
+                                </li>
                                 {% endif %}
                                 
 

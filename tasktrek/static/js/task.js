@@ -54,6 +54,7 @@ document.querySelectorAll('.edit-btn').forEach(editButton => {
     let task_id = editButton.getAttribute('data-taskid')
     let admin_id = editButton.getAttribute('data-adminid')
     editButton.addEventListener('click', function () {
+        console.log("You cliked!");
         const taskItem = editButton.closest('li'); // Target the <li> containing the task
         const taskTitle = taskItem.querySelector('.task-title'); // Get task title
         const taskDescription = taskItem.querySelector('.task-description'); // Get task description
